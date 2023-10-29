@@ -80,8 +80,6 @@ void KDLRobot::update(std::vector<double> _jnt_values, std::vector<double> _jnt_
 
 void KDLRobot::createChain(KDL::Tree &robot_tree)
 {
-    std::cout << "here" << std::endl;
-    //if(!robot_tree.getChain(robot_tree.getRootSegment()->first, "link3", chain_))
     //if(!robot_tree.getChain(robot_tree.getRootSegment()->first, "lbr_iiwa_link_7",chain_))
     if(!robot_tree.getChain(robot_tree.getRootSegment()->first, 
         std::prev(std::prev(robot_tree.getSegments().end()))->first, chain_))
@@ -213,13 +211,6 @@ KDL::Jacobian KDLRobot::getEEJacobian()
 
 KDL::Jacobian KDLRobot::getEEBodyJacobian()
 {
-    //    KDL::Frame ee_F_s = this->getEEPose().Inverse();
-    //    KDL::Vector pkdl = ee_F_s.p;
-    //    KDL::Rotation M = ee_F_s.M;
-    //    std::cout << adjoint(toEigen(pkdl),toEigen(M))*s_J_ee_.data << std::endl;
-    //    s_J_ee_.changeRefFrame(ee_F_s);
-    //    std::cout << s_J_ee_.data << std::endl;
-    //    return adjoint(toEigen(pkdl),toEigen(M))*s_J_ee_.data;
     return b_J_ee_;
 }
 
