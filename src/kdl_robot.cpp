@@ -31,8 +31,8 @@ KDLRobot::KDLRobot(KDL::Tree &robot_tree)
     grav_.resize(n_);
     q_min_.data.resize(n_);
     q_max_.data.resize(n_);
-    q_min_.data << -2.96,-2.09,-2.96,-2.09,-2.96; //-2*M_PI,-2*M_PI;//
-    q_max_.data <<  2.96,2.09,2.96,2.09,2.96; //2*M_PI, 2*M_PI;
+    q_min_.data << -2.96,-2.09,-2.96,-2.09,-2.96, -2.09,-2.96;//
+    q_max_.data <<  2.96,2.09,2.96,2.09,2.96, 2.09, 2.96;
     ikVelSol_ = new KDL::ChainIkSolverVel_wdls(chain_);
     ikSol_ = new KDL::ChainIkSolverPos_NR_JL(chain_, q_min_, q_max_, *fkSol_, *ikVelSol_);
     // jntArray_out_ = KDL::JntArray(n_);
@@ -80,10 +80,11 @@ void KDLRobot::update(std::vector<double> _jnt_values, std::vector<double> _jnt_
 
 void KDLRobot::createChain(KDL::Tree &robot_tree)
 {
-
+    std::cout << "here" << std::endl;
     //if(!robot_tree.getChain(robot_tree.getRootSegment()->first, "link3", chain_))
     //if(!robot_tree.getChain(robot_tree.getRootSegment()->first, "lbr_iiwa_link_7",chain_))
-    if(!robot_tree.getChain(robot_tree.getRootSegment()->first, "L5_1", chain_))
+    if(!robot_tree.getChain(robot_tree.getRootSegment()->first, 
+        std::prev(std::prev(robot_tree.getSegments().end()))->first, chain_))
     {
         std::cout << "Failed to create KDL robot" << std::endl;
         return;
@@ -175,7 +176,7 @@ KDL::JntArray KDLRobot::getInvKin(const KDL::JntArray &q,
     int err = ikSol_->CartToJnt(q, eeFrame, jntArray_out_);
     if (err != 0)
     {
-        printf("inverse kinematics failed with error%d", err);
+        printf("inverse kinematics failed with error: %d \n", err);
     }
     return jntArray_out_;
 }

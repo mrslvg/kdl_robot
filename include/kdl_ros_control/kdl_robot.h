@@ -60,13 +60,6 @@ public:
     KDL::Jacobian getEEBodyJacobian();
     Eigen::VectorXd getEEJacDotqDot();
 
-    // inverse kinematics
-    void getInverseKinematicsTwoLinks(Eigen::Vector3d &pose,
-                                      Eigen::Vector3d &twist,
-                                      Eigen::Vector3d &acc,
-                                      KDL::JntArray &q,
-                                      KDL::JntArray &dq,
-                                      KDL::JntArray &ddq);
     void getInverseKinematics(KDL::Frame &f,
                               KDL::Twist &twist,
                               KDL::Twist &acc,
