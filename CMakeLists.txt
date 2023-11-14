@@ -124,6 +124,8 @@ include_directories(
 
 ## Declare a C++ library
 add_library(${PROJECT_NAME} src/kdl_robot.cpp
+    src/kdl_control.cpp
+    src/kdl_planner.cpp
 )
 
 ## Add cmake target dependencies of the library
@@ -133,16 +135,13 @@ add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EX
 
 add_executable(kdl_robot_test src/kdl_robot_test.cpp
     src/kdl_robot.cpp
+    src/kdl_control.cpp
+    src/kdl_planner.cpp
     )
-
-target_link_libraries(${PROJECT_NAME}
-   ${catkin_LIBRARIES}
-)
 
 target_link_libraries(kdl_robot_test
    ${catkin_LIBRARIES}
 )
-
 
 
 #############
