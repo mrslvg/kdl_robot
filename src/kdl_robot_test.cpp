@@ -139,11 +139,11 @@ int main(int argc, char **argv)
     // Init controller
     KDLController controller_(robot);
 
-    // Object's trajectory initial position
+    // EE's trajectory initial position
     KDL::Frame init_cart_pose = robot.getEEFrame();
     Eigen::Vector3d init_position(init_cart_pose.p.data);
 
-    // Object trajectory end position
+    // EE trajectory end position
     Eigen::Vector3d end_position;
     end_position << init_cart_pose.p.x(), -init_cart_pose.p.y(), init_cart_pose.p.z();
 
