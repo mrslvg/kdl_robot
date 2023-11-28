@@ -9,7 +9,7 @@ add_compile_options(-std=c++11)
 ## is used, also find other catkin packages
 
 find_package(orocos_kdl REQUIRED)
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg eigen_conversions kdl_parser orocos_kdl urdf)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs geometry_msgs genmsg eigen_conversions kdl_parser orocos_kdl urdf)
 find_package(Eigen3 REQUIRED)
 
 LINK_DIRECTORIES("lib/")
@@ -145,6 +145,15 @@ target_link_libraries(kdl_robot_test
    ${catkin_LIBRARIES}
 )
 
+add_executable(kdl_robot_vision_control src/kdl_robot_vision_control.cpp
+    src/kdl_robot.cpp
+    src/kdl_control.cpp
+    src/kdl_planner.cpp
+    )
+
+target_link_libraries(kdl_robot_vision_control
+   ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##

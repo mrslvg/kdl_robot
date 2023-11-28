@@ -4,6 +4,8 @@
 #include "kdl/frames.hpp"
 #include "kdl/jacobian.hpp"
 #include "Eigen/Dense"
+#include "Eigen/Core"
+#include <Eigen/Dense>
 #include <iostream>
 
 inline KDL::Vector toKDL(const Eigen::Vector3d& v)
@@ -37,6 +39,12 @@ inline Eigen::MatrixXd toEigen(const std::vector<Eigen::Matrix<double,3,7>>& J)
         Ja.block(i*3,0,3,7) = J.at(i);
     }
     return Ja;
+}
+
+inline Eigen::VectorXd toEigen(std::vector<double>& v)
+{
+    Eigen::Map<Eigen::VectorXd> ve(&v[0], v.size());
+    return ve;
 }
 
 inline Eigen::Vector3d toEigen(const KDL::Vector& v)
@@ -190,6 +198,12 @@ inline Eigen::Matrix<double,3,1> computeOrientationError(const Eigen::Matrix<dou
 //    std::cout << "R_d: " << std::endl << _R_d << std::endl;
 //    std::cout << "R_e: " << std::endl << _R_e << std::endl;
     return e_o;
+}
+
+inline double computeJointErrorNorm(const Eigen::Matrix<double,-1,1> &_jnt_d,
+                                    const Eigen::Matrix<double,-1,1> &_jnt_e)
+{
+    return (_jnt_d - _jnt_e).norm();
 }
 
 inline Eigen::Matrix<double,3,1> computeLinearError(const Eigen::Matrix<double,3,1> &_p_d,
